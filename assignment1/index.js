@@ -74,7 +74,7 @@ var handlers = {};
 
 handlers.hello = function(data,callback){
 	//Status Code & Payload Obj
-	callback(415, {'hello' : 'Hello There!'});
+	callback(415, {'hello' : 'Hello There! I am learning NodeJS on Pirple. How about you?'});
 };
 
 handlers.notFound = function(data,callback){
