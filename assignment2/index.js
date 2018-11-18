@@ -77,7 +77,7 @@ var server = http.createServer(function(request,response){
 //Routes
 var router = {
 	'ping' : handlers.ping,
-	'usdrs': handlers.users
+	'users': handlers.users
 };
 
 

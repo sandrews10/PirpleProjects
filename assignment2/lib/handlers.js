@@ -30,9 +30,23 @@ handlers._users = {};
 
 handlers._users.get = function(data, callback){
 
+	var phone = typeof(data.queryStringObj.phone) == 'string' && data.queryStringObj.phone.trim().length == 10 ? data.queryStringObj.phone.trim() : false;
+	if(phone){
+		_data.read('users', phone, function(err, data){
+			if(!err && data){
+				delete data.hashedPassword;
+				callback(200, data);	
+			}else{
+				callback(404);
+			}
+		});
+	}else{
+		callback(400, {'Error' : 'Missing required field(s)'});
+	}
 };
 
 handlers._users.post = function(data, callback){
+
 	var firstName = typeof(data.payload.firstName) == 'string' && data.payload.firstName.trim().length > 0 ? data.payload.firstName.trim() : false;
 	var lastName = typeof(data.payload.lastName) == 'string' && data.payload.lastName.trim().length > 0 ? data.payload.lastName.trim() : false;
 	var phone = typeof(data.payload.phone) == 'string' && data.payload.phone.trim().length == 10 ? data.payload.phone.trim() : false;
@@ -44,7 +58,7 @@ handlers._users.post = function(data, callback){
 		_data.read('users', phone, function(err, data){
 			if(err){
 				var hashedPassword = helpers.hash(password);
-				
+
 				if(hashedPassword){
 					var userObject = {
 						'firstName' : firstName,
@@ -73,13 +87,21 @@ handlers._users.post = function(data, callback){
 		});
 
 	}else{
-		callback(400, {'Error': 'Missing required fields'});
+		callback(400, {'Error' : 'Missing Required Field(s)'});
 	}
 
 };
 
 handlers._users.put = function(data, callback){
 
+	var phone = typeof(data.payload.phone) == 'string' && data.payload.phone.trim().length == 10 ? data.payload.phone.trim() : false;
+
+
+	var firstName = typeof(data.payload.firstName) == 'string' && data.payload.firstName.trim().length > 0 ? data.payload.firstName.trim() : false;
+	var lastName = typeof(data.payload.lastName) == 'string' && data.payload.lastName.trim().length > 0 ? data.payload.lastName.trim() : false;
+	var phone = typeof(data.payload.phone) == 'string' && data.payload.phone.trim().length == 10 ? data.payload.phone.trim() : false;
+	var password = typeof(data.payload.password) == 'string' && data.payload.password.trim().length > 0 ? data.payload.password.trim() : false;
+	
 };
 
 handlers._users.delete = function(data, callback){
