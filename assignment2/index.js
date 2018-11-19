@@ -65,7 +65,7 @@ var server = http.createServer(function(request,response){
 			response.end(payloadString);
 
 			//Log the requested path
-			console.log('Returning Response: ', statusCode,payloadString);
+			console.log('Returning Response: ', statusCode, payloadString);
 		});
 
 	});
@@ -77,10 +77,11 @@ var server = http.createServer(function(request,response){
 //Routes
 var router = {
 	'ping' : handlers.ping,
-	'users': handlers.users
+	'users': handlers.users,
+	'tokens': handlers.tokens
 };
 
 
 server.listen(config.port, function(){
-	console.log('Server running on Port: '+ config.port + ' in the '+ config.envName + ' envronment');
+	console.log('Server running on Port: '+ config.port + ' in the '+ config.envName + ' environment');
 });
